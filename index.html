@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Nim</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='30' cy='50' r='20' fill='%23FF3B30'/><circle cx='70' cy='50' r='20' fill='%23007AFF'/></svg>">
+</head>
+<body>
+    <!-- ==================== EINSTELLUNGEN ==================== -->
+    <div id="screen-settings" class="screen active">
+        <nav class="navbar">
+            <button class="nav-btn nav-btn-left info-btn" id="btn-info" title="Info"><svg width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="10" fill="none" stroke="currentColor" stroke-width="1.3"/><text x="11" y="15.5" text-anchor="middle" font-size="13" font-family="-apple-system,serif" font-style="italic" fill="currentColor">i</text></svg></button>
+            <div class="nav-title">Einstellungen</div>
+            <button class="nav-btn nav-btn-right" id="btn-start-game">Start</button>
+        </nav>
+        <div class="screen-content settings-content">
+            <!-- Nummerierungsmodus -->
+            <div class="number-mode-bar">
+                <div class="segment-control" id="settings-number-mode">
+                    <button class="segment active" data-value="0" title="keine Nummerierung">—</button>
+                    <button class="segment" data-value="1" title="jedes fünfte Feld">5</button>
+                    <button class="segment" data-value="2" title="alle Felder">1</button>
+                </div>
+            </div>
+
+            <!-- Vorschau Spielfeld -->
+            <div class="preview-container">
+                <div class="tile-bar-container" id="settings-preview-bar"></div>
+            </div>
+
+            <!-- Spielparameter -->
+            <div class="settings-group">
+                <div class="setting-row">
+                    <div class="setting-label" id="fields-label">10 Felder</div>
+                    <div class="stepper" id="fields-stepper">
+                        <button class="stepper-btn stepper-minus">−</button>
+                        <button class="stepper-btn stepper-plus">+</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-label" id="circles-label">1 oder 2 Plättchen</div>
+                    <div class="stepper" id="circles-stepper">
+                        <button class="stepper-btn stepper-minus">−</button>
+                        <button class="stepper-btn stepper-plus">+</button>
+                    </div>
+                </div>
+                <div class="setting-row">
+                    <div class="setting-label" id="winmode-label">letztes Feld gewinnt</div>
+                    <div class="segment-control" id="winmode-segment">
+                        <button class="segment" data-value="lastLoses" title="letztes Feld verliert">&#x1F44E;</button>
+                        <button class="segment active" data-value="lastWins" title="letztes Feld gewinnt">&#x1F44D;</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Spielernamen und Farben -->
+            <div class="settings-group player-settings">
+                <div class="player-row">
+                    <div class="color-circle" id="left-color-circle" data-player="left"></div>
+                    <input type="text" class="player-name-input" id="left-player-name" placeholder="Hier Namen eingeben">
+                </div>
+                <div class="player-row">
+                    <div class="color-circle" id="right-color-circle" data-player="right"></div>
+                    <input type="text" class="player-name-input" id="right-player-name" placeholder="Hier Namen eingeben">
+                </div>
+            </div>
+
+            <!-- Farbauswahl Popup -->
+            <div class="color-picker-overlay" id="color-picker-overlay">
+                <div class="color-picker-popup" id="color-picker-popup">
+                    <div class="color-grid">
+                        <div class="color-option" data-color="red" style="background: #FF3B30;"></div>
+                        <div class="color-option" data-color="blue" style="background: #007AFF;"></div>
+                        <div class="color-option" data-color="yellow" style="background: #FFCC00;"></div>
+                        <div class="color-option" data-color="green" style="background: #34C759;"></div>
+                        <div class="color-option" data-color="orange" style="background: #FF9500;"></div>
+                        <div class="color-option" data-color="purple" style="background: #AF52DE;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SPIEL ==================== -->
+    <div id="screen-game" class="screen">
+        <nav class="navbar">
+            <button class="nav-btn nav-btn-left" id="btn-back-settings">&lsaquo; Einstellungen</button>
+            <div class="nav-title">Nim-Spiel</div>
+            <button class="nav-btn nav-btn-right" id="btn-goto-archive">Archiv</button>
+        </nav>
+        <div class="screen-content game-content">
+            <!-- Nummerierungsmodus -->
+            <div class="number-mode-bar">
+                <div class="segment-control" id="game-number-mode">
+                    <button class="segment active" data-value="0" title="keine Nummerierung">—</button>
+                    <button class="segment" data-value="1" title="jedes fünfte Feld">5</button>
+                    <button class="segment" data-value="2" title="alle Felder">1</button>
+                </div>
+            </div>
+
+            <!-- Aufgabentext -->
+            <div class="task-label" id="task-label">Wer beginnt?</div>
+
+            <!-- Spielerbuttons -->
+            <div class="player-buttons">
+                <button class="player-btn" id="left-player-btn">Links</button>
+                <button class="player-btn" id="right-player-btn">Rechts</button>
+            </div>
+
+            <!-- Spielfeld -->
+            <div class="game-field-container">
+                <div class="tile-bar-container" id="game-tile-bar"></div>
+            </div>
+
+            <!-- Aktionsbuttons -->
+            <div class="game-actions">
+                <button class="action-btn" id="btn-new-game">Neues Spiel</button>
+                <button class="action-btn" id="btn-archive-game" style="display: none;">Spiel archivieren</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== ARCHIV ==================== -->
+    <div id="screen-archive" class="screen">
+        <nav class="navbar">
+            <button class="nav-btn nav-btn-left" id="btn-back-game">&lsaquo; Nim-Spiel</button>
+            <div class="nav-title">Archiv</div>
+            <div class="nav-actions">
+                <button class="nav-btn" id="btn-sort-archive" title="Sortieren">&#x21C5;</button>
+                <button class="nav-btn" id="btn-pdf-archive" title="PDF exportieren">PDF</button>
+                <button class="nav-btn" id="btn-export-all" title="JSON exportieren">&#x1F4E4;</button>
+                <button class="nav-btn" id="btn-import-archive" title="Importieren">&#x1F4E5;</button>
+                <button class="nav-btn nav-btn-danger" id="btn-delete-all" title="Alle löschen">&#x1F5D1;</button>
+            </div>
+        </nav>
+        <div class="screen-content archive-content">
+            <!-- Nummerierungsmodus -->
+            <div class="number-mode-bar">
+                <div class="segment-control" id="archive-number-mode">
+                    <button class="segment active" data-value="0" title="keine Nummerierung">—</button>
+                    <button class="segment" data-value="1" title="jedes fünfte Feld">5</button>
+                    <button class="segment" data-value="2" title="alle Felder">1</button>
+                </div>
+            </div>
+            <div class="archive-scroll" id="archive-scroll">
+                <div class="archive-empty" id="archive-empty">Noch keine Spiele archiviert.</div>
+            </div>
+            <input type="file" id="import-file-input" accept=".nim,.json" style="display:none;">
+        </div>
+
+        <!-- Sortierpopup -->
+        <div class="sort-overlay" id="sort-overlay">
+            <div class="sort-popup">
+                <div class="sort-group-label">nach Spiellänge</div>
+                <button class="sort-option" data-sort="length-asc">kürzeste zuerst</button>
+                <button class="sort-option" data-sort="length-desc">längste zuerst</button>
+                <div class="sort-group-label">chronologisch</div>
+                <button class="sort-option" data-sort="chrono-asc">älteste zuerst</button>
+                <button class="sort-option" data-sort="chrono-desc">neueste zuerst</button>
+                <div class="sort-group-label">nach erstem Zug</div>
+                <button class="sort-option" data-sort="first-left">linker Spieler zuerst</button>
+                <button class="sort-option" data-sort="first-right">rechter Spieler zuerst</button>
+                <button class="sort-option sort-cancel">Abbrechen</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SPIEL UNTERSUCHEN ==================== -->
+    <div id="screen-research" class="screen">
+        <nav class="navbar">
+            <button class="nav-btn nav-btn-left" id="btn-back-archive">&lsaquo; Archiv</button>
+            <div class="nav-title">Nim-Spiel untersuchen</div>
+        </nav>
+        <div class="screen-content research-content">
+            <!-- Nummerierungsmodus -->
+            <div class="number-mode-bar">
+                <div class="segment-control" id="research-number-mode">
+                    <button class="segment active" data-value="0" title="keine Nummerierung">—</button>
+                    <button class="segment" data-value="1" title="jedes fünfte Feld">5</button>
+                    <button class="segment" data-value="2" title="alle Felder">1</button>
+                </div>
+            </div>
+
+            <!-- Referenzspiel -->
+            <div class="research-section">
+                <div class="research-labels" id="research-ref-labels"></div>
+                <div class="tile-bar-container reference-bar" id="research-reference-bar"></div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Spielbares Feld -->
+            <div class="research-section">
+                <div class="research-controls">
+                    <div class="setting-row compact">
+                        <div class="setting-label" id="research-fields-label">10 Felder</div>
+                        <div class="stepper" id="research-fields-stepper">
+                            <button class="stepper-btn stepper-minus">−</button>
+                            <button class="stepper-btn stepper-plus">+</button>
+                        </div>
+                    </div>
+                    <div class="setting-row compact">
+                        <div class="setting-label" id="research-circles-label">1 oder 2 Plättchen</div>
+                        <div class="stepper" id="research-circles-stepper">
+                            <button class="stepper-btn stepper-minus">−</button>
+                            <button class="stepper-btn stepper-plus">+</button>
+                        </div>
+                    </div>
+                    <div class="setting-row compact">
+                        <div class="setting-label" id="research-winmode-label">letztes Feld gewinnt</div>
+                        <div class="segment-control" id="research-winmode-segment">
+                            <button class="segment" data-value="lastLoses">&#x1F44E;</button>
+                            <button class="segment active" data-value="lastWins">&#x1F44D;</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aufgabentext -->
+                <div class="task-label" id="research-task-label">Wer beginnt?</div>
+
+                <!-- Spielerbuttons -->
+                <div class="player-buttons">
+                    <button class="player-btn" id="research-left-btn">Links</button>
+                    <button class="player-btn" id="research-right-btn">Rechts</button>
+                </div>
+
+                <!-- Spielfeld -->
+                <div class="game-field-container">
+                    <div class="tile-bar-container" id="research-game-bar"></div>
+                </div>
+
+                <!-- Aktionsbuttons -->
+                <div class="game-actions">
+                    <button class="action-btn" id="research-new-game">Neues Spiel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== INFO ==================== -->
+    <div class="dialog-overlay" id="info-overlay">
+        <div class="info-box">
+            <div class="info-header">
+                <div class="info-icon">
+                    <svg width="60" height="60" viewBox="0 0 100 100">
+                        <circle cx="30" cy="50" r="20" fill="#FF3B30"/>
+                        <circle cx="70" cy="50" r="20" fill="#007AFF"/>
+                    </svg>
+                </div>
+                <div class="info-title">Nim</div>
+                <div class="info-subtitle">Webversion</div>
+            </div>
+            <div class="info-content">
+                <p>Diese Webversion basiert auf der originalen iOS-App <strong>Nim</strong> von <strong>Heiko Etzold</strong> und <strong>Günter Krauthausen</strong>.</p>
+                <p>Webversion erstellt von <strong>Christian Urff</strong>.</p>
+                <p class="info-links">
+                    <a href="https://www.lernsoftware-mathematik.de/nim" target="_blank" rel="noopener">Nim online spielen</a><br>
+                    <a href="https://github.com/heiko-etzold/nim-app" target="_blank" rel="noopener">Original iOS-App auf GitHub</a><br>
+                    <a href="https://github.com/christianurff/nim-webapp" target="_blank" rel="noopener">Webversion auf GitHub</a><br>
+                    <a href="https://heiko-etzold.github.io/nim-material" target="_blank" rel="noopener">Materialien für den Unterricht</a>
+                </p>
+                <div class="info-license">
+                    <strong>Lizenz</strong>
+                    <p>Die Webversion steht unter der <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.de" target="_blank" rel="noopener">CC&nbsp;BY-SA&nbsp;4.0</a>-Lizenz.<br>
+                    Die originale iOS-App von Heiko Etzold und Günter Krauthausen steht unter der <a href="https://github.com/heiko-etzold/nim-app/blob/main/LICENSE" target="_blank" rel="noopener">MIT-Lizenz</a>.</p>
+                </div>
+            </div>
+            <button class="info-close-btn" id="btn-close-info">Schließen</button>
+        </div>
+    </div>
+
+    <!-- ==================== PDF PRINT AREA ==================== -->
+    <div id="print-area" class="print-area"></div>
+
+    <!-- Confirm-Dialog -->
+    <div class="dialog-overlay" id="dialog-overlay">
+        <div class="dialog-box" id="dialog-box">
+            <div class="dialog-title" id="dialog-title"></div>
+            <div class="dialog-message" id="dialog-message"></div>
+            <div class="dialog-buttons" id="dialog-buttons"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

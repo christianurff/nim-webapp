@@ -1,0 +1,53 @@
+Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+
+Copyright (c) Christian Urff (Webversion)
+
+Die Webversion basiert auf der originalen iOS-App "Nim" von Heiko Etzold und Günter Krauthausen,
+die unter der MIT-Lizenz veröffentlicht ist:
+https://github.com/heiko-etzold/nim-app
+
+Diese Arbeit ist lizenziert unter der Creative Commons
+Attribution-ShareAlike 4.0 International License.
+
+Sie dürfen:
+- Teilen: das Material in jedwedem Format oder Medium vervielfältigen
+  und weiterverbreiten
+- Bearbeiten: das Material remixen, verändern und darauf aufbauen,
+  und zwar für beliebige Zwecke, sogar kommerziell
+
+Unter folgenden Bedingungen:
+- Namensnennung: Sie müssen angemessene Urheber- und Rechteangaben
+  machen, einen Link zur Lizenz beifügen und angeben, ob Änderungen
+  vorgenommen wurden.
+- Weitergabe unter gleichen Bedingungen: Wenn Sie das Material remixen,
+  verändern oder anderweitig direkt darauf aufbauen, dürfen Sie Ihre
+  Beiträge nur unter derselben Lizenz wie das Original verbreiten.
+
+Vollständiger Lizenztext:
+https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+---
+
+Die originale iOS-App unterliegt der MIT-Lizenz:
+
+MIT License
+
+Copyright (c) 2022 Heiko Etzold, Günter Krauthausen
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
